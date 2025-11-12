@@ -5,7 +5,7 @@ module lab_top
     parameter  clk_mhz       = 50,
                w_key         = 4,
                w_sw          = 8,
-               w_led         = 8,
+               w_led         = 4,
                w_digit       = 8,
                w_gpio        = 100,
 
@@ -92,7 +92,7 @@ module lab_top
         2'b00: dec1 = 4'b0001;
         2'b01: dec1 = 4'b0010;
         2'b10: dec1 = 4'b0100;
-        2'b11: dec1 = 4'b1000;
+        2'b11: dec1 = 4'b1111;
         endcase
 
     // Implementation 3: shift
@@ -111,6 +111,6 @@ module lab_top
 
     //------------------------------------------------------------------------
 
-    assign led = w_led' ({ dec0, dec1, dec2, dec3 });
+    assign led = w_led' ({ dec0, dec1, dec2, dec3 });   
 
 endmodule

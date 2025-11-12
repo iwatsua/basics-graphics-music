@@ -2,7 +2,7 @@
 
 module lab_top
 # (
-    parameter  clk_mhz       = 50,
+    parameter  clk_mhz       = 125,
                w_key         = 4,
                w_sw          = 8,
                w_led         = 8,
@@ -82,22 +82,37 @@ module lab_top
 
     //------------------------------------------------------------------------
 
-    wire button_on = | key;
+    wire button_on = | (~key);
 
     logic [w_led - 1:0] shift_reg;
 
-    always_ff @ (posedge clk or posedge rst)
+/*    always_ff @ (posedge clk or posedge rst)
         if (rst)
             shift_reg <= '1;
         else if (enable)
-            shift_reg <= { button_on, shift_reg [w_led - 1:1] };
+            shift_reg <= { button_on, shift_reg [w_led - 1:1] };*/
 
     assign led = shift_reg;
 
     // Exercise 1: Make the light move in the opposite direction.
+/*    always_ff @ (posedge clk or posedge rst)
+        if (rst)
+            shift_reg <= '1;
+        else if (enable)
+            shift_reg <= { shift_reg [w_led - 2:0], button_on };*/
 
     // Exercise 2: Make the light moving in a loop.
     // Use another key to reset the moving lights back to no lights.
+    wire a = ~key[0];
+    wire b = ~key[1];    
+    always_ff @ (posedge clk or posedge rst)
+        if (rst)
+            shift_reg <= 1;
+        else if (a)
+            shift_reg <= 0;          
+        else if (enable)
+            //if (b)
+            shift_reg <= { shift_reg [w_led - 2:0], shift_reg[w_led - 1]};
 
     // Exercise 3: Display the state of the shift register
     // on a seven-segment display, moving the light in a circle.

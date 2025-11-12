@@ -124,8 +124,8 @@ module lab_top
     // without using "?" operation, "if", "case" or a bit selection.
     // Use only operations "&", "|", "~" and parenthesis, "(" and ")".
 
-    wire mux4 = 1'b0;
-
+    wire mux4 = a&sel | b&~sel;
+    //assign led [0] = mux4;
     //------------------------------------------------------------------------
 
     // Use table
@@ -143,9 +143,23 @@ module lab_top
     };
 
     wire mux5 = table5 [{ sel, a, b }];
+    //assign led [1] = mux5;
 
     // Exercise 2: Change the table to get the correct result by doing
-    // wire mux5_2 = table5_2 [{ a, b, sel }];
+
+    wire [0:7] table5_2 =
+    {
+        1'b0, // a = 0, b = 0, sel = 0
+        1'b0, // a = 0, b = 0, sel = 1
+        1'b1, // a = 0, b = 1, sel = 0
+        1'b0, // a = 0, b = 1, sel = 1
+        1'b0, // a = 1, b = 0, sel = 0
+        1'b1, // a = 1, b = 0, sel = 1
+        1'b1, // a = 1, b = 1, sel = 0
+        1'b1  // a = 1, b = 1, sel = 1
+    };    
+    wire mux5_2 = table5_2 [{ a, b, sel }];
+    //assign led [2] = mux5_2;
 
     //------------------------------------------------------------------------
 
@@ -162,11 +176,13 @@ module lab_top
     };
 
     wire mux6 = table6 [{ sel, a, b }];
+    //assign led [3] = mux6;
 
     //------------------------------------------------------------------------
 
     wire [7:0] table7 = 8'b1100_1010;
     wire mux7 = table7 [{ sel, a, b }];
+    //assign led [3] = mux7;    
 
     //------------------------------------------------------------------------
 
@@ -194,6 +210,7 @@ module lab_top
     };
 
     wire mux8 = table8 [sel][a][b];
+    //assign led [3] = mux8;
 
     `endif
 
@@ -223,6 +240,7 @@ module lab_top
     };
 
     wire mux9 = table9 [sel][a][b];
+    //assign led [3] = mux9;
 
     `endif
 
@@ -275,9 +293,10 @@ module lab_top
     };
 
     wire mux11 = table11 [a][b][sel];
+    //assign led [5] = mux11;
 
     // Exercise 3: Change the table to get the correct result by doing
-    // wire mux11_2 = table11_2 [sel][b][a];
+    wire mux11_2 = table11_2 [sel][b][a];
 
     `else
 
@@ -294,11 +313,11 @@ module lab_top
             mux7  , mux6  , mux5 , mux4 ,
             mux3  , mux2  , mux1 , mux0 };
 
-    assign led = w_led' (all_muxes);
+    //assign led = w_led' (all_muxes);
 
     // Use concatenation operation for the boards with 4 LEDs:
 
-    // assign led = w_led' ({ mux3  , mux2  , mux1 , mux0 });
+    assign led = w_led' ({ mux3  , mux2  , mux1 , mux0 });
     // assign led = w_led' ({ mux6  , mux5  , mux4 , mux0 });
     // assign led = w_led' ({ mux9  , mux8  , mux7 , mux0 });
     // assign led = w_led' ({ mux11 , mux10 , mux4 , mux0 });

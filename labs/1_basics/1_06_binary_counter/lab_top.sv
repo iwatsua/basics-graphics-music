@@ -2,7 +2,7 @@
 
 module lab_top
 # (
-    parameter  clk_mhz       = 50,
+    parameter  clk_mhz       = 125,
                w_key         = 4,
                w_sw          = 8,
                w_led         = 8,
@@ -74,7 +74,7 @@ module lab_top
     // How do you change the speed of LED blinking?
     // Try different bit slices to display.
 
-    localparam w_cnt = $clog2 (clk_mhz * 1000 * 1000);
+    /*localparam w_cnt = $clog2 (clk_mhz * 1000 * 10000);
 
     logic [w_cnt - 1:0] cnt;
 
@@ -84,23 +84,14 @@ module lab_top
         else
             cnt <= cnt + 1'd1;
 
-    assign led = cnt [$left (cnt) -: w_led];
+    assign led = cnt [$left (cnt) -: w_led];*/    
 
     // Exercise 2: Key-controlled counter.
     // Comment out the code above.
     // Uncomment and synthesize the code below.
     // Press the key to see the counter incrementing.
-    //
-    // Change the design, for example:
-    //
-    // 1. One key is used to increment, another to decrement.
-    //
-    // 2. Two counters controlled by different keys
-    // displayed in different groups of LEDs.
 
-    /*
-
-    wire any_key = | key;
+    /*wire any_key = |(~key);
 
     logic any_key_r;
 
@@ -120,8 +111,50 @@ module lab_top
         else if (any_key_pressed)
             cnt <= cnt + 1'd1;
 
+    assign led = w_led' (cnt);*/
+
+
+    // Change the design, for example:
+    //
+    // 1. One key is used to increment, another to decrement.
+    wire any_key_inc = ~key[2];
+    wire any_key_dec = ~key[3];    
+
+    logic any_key_r_inc;
+    logic any_key_r_dec;    
+
+    always_ff @ (posedge clk or posedge rst)
+        if (rst) begin
+            any_key_r_inc <= '0;
+            any_key_r_dec <= '0;
+        end
+        else begin
+            any_key_r_inc <= any_key_inc;
+            any_key_r_dec <= any_key_dec;            
+        end
+
+    wire any_key_pressed_inc = ~ any_key_inc & any_key_r_inc;
+    wire any_key_pressed_dec = ~ any_key_dec & any_key_r_dec;
+
+    logic [w_led - 1:0] cnt;
+
+    always_ff @ (posedge clk or posedge rst)
+        if (rst)
+            cnt <= '0;
+        else if (any_key_pressed_inc) 
+            cnt <= cnt + 1'd1;
+        else if (any_key_pressed_dec) 
+            cnt <= cnt - 1'd1;           
+
     assign led = w_led' (cnt);
 
-    */
+
+    // 2. Two counters controlled by different keys
+    // displayed in different groups of LEDs.
+    
+
+
+
+    
 
 endmodule

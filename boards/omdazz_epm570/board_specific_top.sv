@@ -8,7 +8,7 @@
 
 module board_specific_top
 # (
-    parameter clk_mhz       = 50,
+    parameter clk_mhz       = 125,
               pixel_mhz     = 25,
 
               w_key         = 6,
@@ -133,8 +133,8 @@ module board_specific_top
         .slow_clk      (   slow_clk      ),
         .rst           (   rst           ),
 
-        .key           ( ~ KEY           ),
-        .sw            ( ~ CKEY          ),
+        .key           (  KEY           ),
+        .sw            (  CKEY          ),
 
         .led           (   lab_led       ),
 
@@ -163,10 +163,10 @@ module board_specific_top
 
     //------------------------------------------------------------------------
 
-    assign LED       = ~ lab_led;
+    assign LED       =  lab_led;
 
-    assign SEG       = ~ abcdefgh;
-    assign DIG       = ~ digit;
+    assign SEG       =  abcdefgh;
+    assign DIG       =  digit;
 
     //------------------------------------------------------------------------
 
