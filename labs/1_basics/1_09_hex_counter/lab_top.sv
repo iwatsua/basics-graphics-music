@@ -80,13 +80,13 @@ module lab_top
     localparam min_period = clk_mhz * 1000 * 1000 / 50,
                max_period = clk_mhz * 1000 * 1000 *  3;
 
-    always_ff @ (posedge clk or posedge rst)
+/*    always_ff @ (posedge clk or posedge rst)
         if (rst)
             period <= 32' ((min_period + max_period) / 2);
         else if (key [0] & period != max_period)
             period <= period + 32'h1;
         else if (key [1] & period != min_period)
-            period <= period - 32'h1;
+            period <= period - 32'h1;*/
 
     logic [31:0] cnt_1;
 
@@ -129,5 +129,27 @@ module lab_top
     //
     // 1. Double the frequency when one key is pressed and released.
     // 2. Halve the frequency when another key is pressed and released.
+    logic key0_prev, key1_prev; // хранение предыдущего состояния кнопок
+
+    always_ff @(posedge clk or posedge rst) begin
+        if (rst) begin
+            period <= 32' (min_period + max_period) / 2;
+            key0_prev <= 0;
+            key1_prev <= 0;
+        end 
+        else begin
+            // Обнаружение фронта отпускания кнопки 0 (удвоить частоту -/ period в 2 раза)
+            if (key[0] == 0 && key0_prev == 1 && period > min_period) 
+                period <= (period >> 1) < min_period ? min_period : (period >> 1);
+
+            // Обнаружение фронта отпускания кнопки 1 (разделить частоту на 2 -/ period умножить на 2)
+            if (key[1] == 0 && key1_prev == 1 && period < max_period)
+                period <= (period << 1) > max_period ? max_period : (period << 1);
+
+            key0_prev <= key[0];
+            key1_prev <= key[1];
+        end
+    end
+
 
 endmodule

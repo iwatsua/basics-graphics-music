@@ -59,9 +59,9 @@ module lab_top
 
     //------------------------------------------------------------------------
 
-    // assign led        = '0;
-       assign abcdefgh   = '0;
-       assign digit      = '0;
+     assign led        = '0;
+    //   assign abcdefgh   = '0;
+    //   assign digit      = '0;
        assign red        = '0;
        assign green      = '0;
        assign blue       = '0;
@@ -84,7 +84,7 @@ module lab_top
 
     wire button_on = | (~key);
 
-    logic [w_led - 1:0] shift_reg;
+    //logic [w_led - 1:0] shift_reg;
 
 /*    always_ff @ (posedge clk or posedge rst)
         if (rst)
@@ -92,7 +92,7 @@ module lab_top
         else if (enable)
             shift_reg <= { button_on, shift_reg [w_led - 1:1] };*/
 
-    assign led = shift_reg;
+    //assign led = shift_reg;
 
     // Exercise 1: Make the light move in the opposite direction.
 /*    always_ff @ (posedge clk or posedge rst)
@@ -103,18 +103,70 @@ module lab_top
 
     // Exercise 2: Make the light moving in a loop.
     // Use another key to reset the moving lights back to no lights.
-    wire a = ~key[0];
-    wire b = ~key[1];    
+/*    wire a = ~key[0];
+    wire b = ~key[1];
+    logic a_old;    
     always_ff @ (posedge clk or posedge rst)
         if (rst)
             shift_reg <= 1;
-        else if (a)
-            shift_reg <= 0;          
-        else if (enable)
-            //if (b)
-            shift_reg <= { shift_reg [w_led - 2:0], shift_reg[w_led - 1]};
+        else if (enable & a)
+            shift_reg <= { shift_reg [w_led - 2:0], shift_reg[w_led - 1]};            
+        else if (~a)
+            begin
+                shift_reg <= 0;
+                a_old <= '1;
+            end
+        else if (a & a_old)
+            begin
+                a_old <= '0;
+                shift_reg <= 1;                    
+            end*/
 
     // Exercise 3: Display the state of the shift register
     // on a seven-segment display, moving the light in a circle.
+    //   --a--
+    //  |     |
+    //  f     b
+    //  |     |
+    //   --g--
+    //  |     |
+    //  e     c
+    //  |     |
+    //   --d--  h
+
+    typedef enum bit [7:0]
+    {
+        a     = 8'b1000_0000,
+        b     = 8'b0100_0000,
+        c     = 8'b0010_0000,
+        d     = 8'b0001_0000,
+        e     = 8'b0000_1000,        
+        f     = 8'b0000_0100,
+        space = 8'b0000_0000              
+    }
+    seven_seg_encoding_e;
+
+    seven_seg_encoding_e letter;
+
+    always_comb
+      case (6' (shift_reg))
+      6'b100000: letter = a;
+      6'b010000: letter = b;
+      6'b001000: letter = c;
+      6'b000100: letter = d;
+      6'b000010: letter = e;
+      6'b000001: letter = f;      
+      default: letter = space;
+      endcase
+
+    logic [5:0] shift_reg;
+    always_ff @ (posedge clk or posedge rst)
+        if (rst)
+            shift_reg <= 1;
+        else if (enable)
+            shift_reg <= { shift_reg [4:0], shift_reg[5]};
+
+    assign abcdefgh = letter;    
+    assign digit = 1;    
 
 endmodule
