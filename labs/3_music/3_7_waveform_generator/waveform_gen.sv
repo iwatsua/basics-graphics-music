@@ -6,9 +6,9 @@ module waveform_gen
 )
 (
     input                         clk,
-    input                         reset,
+    input                         rst,
     input  [                 2:0] octave,
-    input  [waveform_width - 1:0] waveform,
+    input  [                 3:0] waveform,
     output [y_width        - 1:0] y
 );
 
@@ -17,7 +17,7 @@ module waveform_gen
 
     localparam CLK_BIT  =  $clog2 ( clk_mhz - 4 ) + 4;
     localparam CLK_DIV_DATA_OFFSET = { { CLK_BIT - 2 { 1'b0 } }, 1'b1 };
-    
+
     wire   [y_width - 1:0] tone_y     [4:0];
     wire             [8:0] tone_x;
     wire             [8:0] tone_x_max [4:0];
@@ -29,20 +29,20 @@ module waveform_gen
     wire            [ 8:0] x_max;    // Last sample in a quadrant (quarter period)
     logic  [y_width - 1:0] y_mod;
 
-    always_ff @ (posedge clk or posedge reset)
-        if (reset) 
+    always_ff @ (posedge clk or posedge rst)
+        if (rst)
             clk_div <= '0;
         else
             clk_div <= clk_div + 1'b1;
 
-    always_ff @ (posedge clk or posedge reset)
-        if (reset)
+    always_ff @ (posedge clk or posedge rst)
+        if (rst)
             x <= 9'b1;
         else if (clk_div == CLK_DIV_DATA_OFFSET ) // One sample for L and R audio channels
             x <= (quadrant [0] & (x > 1'b0) | (x >= x_max)) ? (x - 1'b1) : (x + 1'b1);
 
-    always_ff @ (posedge clk or posedge reset)
-        if (reset)
+    always_ff @ (posedge clk or posedge rst)
+        if (rst)
             quadrant <= 2'b0;
         else if ((clk_div == CLK_DIV_DATA_OFFSET ) & ((x == x_max) | (x == 9'b0)))
             quadrant <= quadrant + 1'b1;
@@ -78,7 +78,7 @@ generate
     table_48828_T  table_48828_T  ( .x(tone_x), .y(tone_y [2] ), .x_max(tone_x_max [2] ));
     table_48828_Q  table_48828_Q  ( .x(tone_x), .y(tone_y [4] ), .x_max(tone_x_max [4] ));
     end
-    
+
 endgenerate
 
 endmodule
