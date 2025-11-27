@@ -2,7 +2,7 @@
 
 `include "config.svh"
 
-module snail_mealy_fsm
+module snail_mealy_fsm0101
 (
     input  clk,
     input  rst,
@@ -11,10 +11,12 @@ module snail_mealy_fsm
     output y
 );
 
-    typedef enum bit [1:0]
+    typedef enum logic bit
     {
-        S0 = 1'd0,
-        S1 = 1'd1
+        S0 = 2'd0,
+        S1 = 2'd1,
+        S2 = 2'd2,
+        S3 = 2'd3        
     }
     state_e;
 
@@ -36,12 +38,14 @@ module snail_mealy_fsm
 
         case (state)
         S0: if (~ a) next_state = S1;
-        S1: if (  a) next_state = S0;
+        S1: if (  a) next_state = S2;
+        S2: if (~ a) next_state = S3;
+        S3: if (  a) next_state = S0;        
         endcase
     end
 
     // Output logic based on current state and inputs
 
-    assign y = (a & state == S1);
+    assign y = (a & state == S3);
 
 endmodule
