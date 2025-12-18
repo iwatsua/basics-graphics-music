@@ -9,6 +9,8 @@ lappend all_signals tb.i_lab_top.cnt
 lappend all_signals tb.i_lab_top.led
 lappend all_signals tb.i_lab_top.abcdefgh
 lappend all_signals tb.i_lab_top.digit
+lappend all_signals tb.i_lab_top.any_key_pressed_inc
+lappend all_signals tb.i_lab_top.any_key_pressed_dec
 
 set num_added [ gtkwave::addSignalsFromList $all_signals ]
 

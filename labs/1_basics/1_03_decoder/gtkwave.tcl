@@ -2,10 +2,9 @@
 
 set all_signals [list]
 
-lappend all_signals tb.clk
-lappend all_signals tb.rst
-lappend all_signals tb.i_lab_top.period
-lappend all_signals tb.i_lab_top.cnt_1
+lappend all_signals tb.i_lab_top.in
+lappend all_signals tb.i_lab_top.dec0
+lappend all_signals tb.i_lab_top.led
 
 set num_added [ gtkwave::addSignalsFromList $all_signals ]
 

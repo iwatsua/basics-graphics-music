@@ -11,16 +11,13 @@ module snail_mealy_fsm0101
     output y
 );
 
-    typedef enum logic bit
-    {
-        S0 = 2'd0,
-        S1 = 2'd1,
-        S2 = 2'd2,
-        S3 = 2'd3        
-    }
-    state_e;
+    // Замена enum -> localparam (стандартный Verilog)
+    localparam S0 = 2'd0,  // [translate:Начальное]
+               S1 = 2'd1,  // [translate:'0']
+               S2 = 2'd2,  // [translate:'01']
+               S3 = 2'd3;  // [translate:'010']
 
-    state_e state, next_state;
+    reg [1:0] state, next_state;
 
     // State register
 

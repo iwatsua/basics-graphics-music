@@ -115,12 +115,12 @@ module lab_top
     // Exercise 3: Create an illustration to De Morgan's laws:
     //
     // ~ (a & b) == ~ a | ~ b
-    assign led [0] = ~(key [0] & key [1]); 
-    assign led [1] = ~key [0] | ~key [1];  
+    assign led [0] = ~(a & b); 
+    assign led [1] = ~a | ~b;  
       
     // ~ (a | b) == ~ a & ~ b
-    assign led [2] = ~(key [0] | key [1]); 
-    assign led [3] = ~key [0] & ~key [1];  
+    assign led [2] = ~(a | b); 
+    assign led [3] = ~a & ~b;  
 
 
 

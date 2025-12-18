@@ -124,5 +124,6 @@ module lab_top
 
     // Exercise: Implement FSM for recognizing other sequence,
     // for example 0101
+    
 
 endmodule
