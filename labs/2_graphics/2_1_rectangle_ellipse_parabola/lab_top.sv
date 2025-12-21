@@ -84,12 +84,12 @@ module lab_top
         green = '0;
         blue  = '0;
 
-        if (   x >= screen_width  / 2
-             & x <  screen_width  * 2 / 3
-             & y >= screen_height / 2
-             & y <  screen_height * 2 / 3 )
+        if (   x >= screen_width  / 3
+             & x <  screen_width  * 5 / 7
+             & y >= screen_height / 3
+             & y <  screen_height * 5 / 7 )
         begin
-            if (key [0])
+            if (key [1])
                 green = '1;
             else
                 green = x11 [$left (x11) - 1 -: w_green];
@@ -98,14 +98,17 @@ module lab_top
         `ifdef YOSYS
         if (x * x  + 2 * y * y  < screen_width * screen_width / 4)  // Ellipse
         `else
-        if (x ** 2 + 2 * y ** 2 < (screen_width / 2) ** 2)  // Ellipse
+        if (x ** 2 + 2 * y ** 2 < (screen_width * 2 / 3) ** 2)  // Ellipse
         `endif
         begin
-            red = x11 [$left (x11) - 1 -: w_red];
+            if (key [2])
+                red = '1;
+            else            
+                red = x11 [$left (x11) - 1 -: w_red];
         end
 
         if (x_2 [w_x +: w_y] < y)  // Parabola
-            blue = key [1] ? '1 : y10 [$left (y10) -: w_blue];
+            blue = key [0] ? '1 : y10 [$left (y10) -: w_blue];
     end
 
 endmodule
