@@ -89,9 +89,11 @@ module lab_top
     wire  signed [23:0]    mics = ($signed(mic)<mic_min)? mic_min : (($signed(mic)>mic_max)? mic_max : mic);
     logic        [19:0]    counter;
     logic        [19:0]    distance;
-    logic signed [w_y-1:0] bufy[screen_width/2];
+    //logic signed [w_y-1:0] bufy[screen_width/2];
+    logic signed [6-1:0] bufy[screen_width/2]; //ex.2
     logic        [w_x-1:0] vldx;                        // validity of bufy elements
     wire  signed [w_y-1:0] micy = mics >>> mic_shift;
+    wire signed [5:0] micy6 = micy[8:3];            // micy >> 3 сразу, ex.2
     // Another way:        micy = {mic[23], (mic[23]?~&mic[22:16]:|mic[22:16])? ~{(w_y-1){$signed(mic[23])}} : mic[15-:w_y-1]};
     wire         [w_x-1:0] cntx = counter[19-:w_x];
     wire                   cntx_in_buf = cntx < screen_width / 2;
@@ -100,13 +102,16 @@ module lab_top
     // Excercise 2: Optimize to reduce bits of bufy
     assign white = (x <= vldx)                            // Рисует только актуальные значения из буфера.
                                                           // Design practice: Check if element of bufy is initialized
-            && (x>>2) < (distance[19-:w_x])             // растягивает буфер на весь экран и сглаживает
+            //&& (x>>2) < (distance[19-:w_x])             // растягивает буфер на весь экран и сглаживает
+            && (x>>0) < (distance[19-:w_x])             // зум           
             && (y>>3) == (midy - bufy[(x>>2)])>>3       // draw bolder lines with shift by 3 bits    
             && x < screen_width && y < screen_height;   // do not draw outside the screen
 
+
     always_ff @ (posedge clk)                           // Design practice: Separate always_ff blocks with reset and without
         if (cntx_in_buf)
-            bufy[cntx] <= micy;
+            //bufy[cntx] <= micy;
+            bufy[cntx] <= micy6;  //ex.2
 
     always_ff @ (posedge clk or posedge rst)
         if (rst)
@@ -118,6 +123,12 @@ module lab_top
         end
         else
         begin
+            // key0_prev <= key[0];   // дебаунсинг
+            
+            // // ЗУМ: короткое нажатие key[0] — переключение
+            // if (key[0] && !key0_prev)
+            //     zoom_x <= zoom_x + 1;  // 1x→2x→4x→8x...
+
             if (vldx < cntx)
                 vldx <= cntx;
 
