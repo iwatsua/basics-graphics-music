@@ -139,121 +139,121 @@ module lab_top
      * Add another soundtrack.
      */
 
-    always_comb
-        case (note_cnt)
-        0:  { octave, note } = { 3'b1, E  };
-        1:  { octave, note } = { 3'b1, Ds };
-        2:  { octave, note } = { 3'b1, E  };
-        3:  { octave, note } = { 3'b1, Ds };
-        4:  { octave, note } = { 3'b1, E  };
+    // always_comb
+    //     case (note_cnt)
+    //     0:  { octave, note } = { 3'b1, E  };
+    //     1:  { octave, note } = { 3'b1, Ds };
+    //     2:  { octave, note } = { 3'b1, E  };
+    //     3:  { octave, note } = { 3'b1, Ds };
+    //     4:  { octave, note } = { 3'b1, E  };
 
-        5:  { octave, note } = { 3'b0, B  };
-        6:  { octave, note } = { 3'b1, D  };
-        7:  { octave, note } = { 3'b1, C  };
-        8:  { octave, note } = { 3'b0, A  };
-        9:  { octave, note } = { 3'b0, A  };
+    //     5:  { octave, note } = { 3'b0, B  };
+    //     6:  { octave, note } = { 3'b1, D  };
+    //     7:  { octave, note } = { 3'b1, C  };
+    //     8:  { octave, note } = { 3'b0, A  };
+    //     9:  { octave, note } = { 3'b0, A  };
 
-        10: { octave, note } = { 3'b0, C  };
-        11: { octave, note } = { 3'b0, E  };
-        12: { octave, note } = { 3'b0, A  };
-        13: { octave, note } = { 3'b0, B  };
-        14: { octave, note } = { 3'b0, B  };
+    //     10: { octave, note } = { 3'b0, C  };
+    //     11: { octave, note } = { 3'b0, E  };
+    //     12: { octave, note } = { 3'b0, A  };
+    //     13: { octave, note } = { 3'b0, B  };
+    //     14: { octave, note } = { 3'b0, B  };
 
-        15: { octave, note } = { 3'b0, E  };
-        16: { octave, note } = { 3'b0, Gs };
-        17: { octave, note } = { 3'b0, B  };
-        18: { octave, note } = { 3'b1, C  };
-        19: { octave, note } = { 3'b1, C  };
+    //     15: { octave, note } = { 3'b0, E  };
+    //     16: { octave, note } = { 3'b0, Gs };
+    //     17: { octave, note } = { 3'b0, B  };
+    //     18: { octave, note } = { 3'b1, C  };
+    //     19: { octave, note } = { 3'b1, C  };
 
-        20: { octave, note } = { 3'b1, E  };
-        21: { octave, note } = { 3'b1, Ds };
-        22: { octave, note } = { 3'b1, E  };
-        23: { octave, note } = { 3'b1, Ds };
-        24: { octave, note } = { 3'b1, E  };
+    //     20: { octave, note } = { 3'b1, E  };
+    //     21: { octave, note } = { 3'b1, Ds };
+    //     22: { octave, note } = { 3'b1, E  };
+    //     23: { octave, note } = { 3'b1, Ds };
+    //     24: { octave, note } = { 3'b1, E  };
 
-        25: { octave, note } = { 3'b0, B  };
-        26: { octave, note } = { 3'b1, D  };
-        27: { octave, note } = { 3'b1, C  };
-        28: { octave, note } = { 3'b0, A  };
-        29: { octave, note } = { 3'b0, A  };
+    //     25: { octave, note } = { 3'b0, B  };
+    //     26: { octave, note } = { 3'b1, D  };
+    //     27: { octave, note } = { 3'b1, C  };
+    //     28: { octave, note } = { 3'b0, A  };
+    //     29: { octave, note } = { 3'b0, A  };
 
-        30: { octave, note } = { 3'b0, C  };
-        31: { octave, note } = { 3'b0, E  };
-        32: { octave, note } = { 3'b0, A  };
-        33: { octave, note } = { 3'b0, B  };
-        34: { octave, note } = { 3'b0, B  };
+    //     30: { octave, note } = { 3'b0, C  };
+    //     31: { octave, note } = { 3'b0, E  };
+    //     32: { octave, note } = { 3'b0, A  };
+    //     33: { octave, note } = { 3'b0, B  };
+    //     34: { octave, note } = { 3'b0, B  };
 
-        35: { octave, note } = { 3'b0, E  };
-        36: { octave, note } = { 3'b1, C  };
-        37: { octave, note } = { 3'b0, B  };
-        38: { octave, note } = { 3'b0, A  };
-        39: { octave, note } = { 3'b0, A  };
+    //     35: { octave, note } = { 3'b0, E  };
+    //     36: { octave, note } = { 3'b1, C  };
+    //     37: { octave, note } = { 3'b0, B  };
+    //     38: { octave, note } = { 3'b0, A  };
+    //     39: { octave, note } = { 3'b0, A  };
 
-        40: { octave, note } = { 3'b0, B  };
-        41: { octave, note } = { 3'b1, C  };
-        42: { octave, note } = { 3'b1, D  };
-        43: { octave, note } = { 3'b1, E  };
-        44: { octave, note } = { 3'b1, E  };
-        45: { octave, note } = { 3'b1, E  };
+    //     40: { octave, note } = { 3'b0, B  };
+    //     41: { octave, note } = { 3'b1, C  };
+    //     42: { octave, note } = { 3'b1, D  };
+    //     43: { octave, note } = { 3'b1, E  };
+    //     44: { octave, note } = { 3'b1, E  };
+    //     45: { octave, note } = { 3'b1, E  };
 
-        46: { octave, note } = { 3'b0, G  };
-        47: { octave, note } = { 3'b1, F  };
-        48: { octave, note } = { 3'b1, E  };
-        49: { octave, note } = { 3'b1, D  };
-        50: { octave, note } = { 3'b1, D  };
-        51: { octave, note } = { 3'b1, D  };
+    //     46: { octave, note } = { 3'b0, G  };
+    //     47: { octave, note } = { 3'b1, F  };
+    //     48: { octave, note } = { 3'b1, E  };
+    //     49: { octave, note } = { 3'b1, D  };
+    //     50: { octave, note } = { 3'b1, D  };
+    //     51: { octave, note } = { 3'b1, D  };
 
-        52: { octave, note } = { 3'b0, F  };
-        53: { octave, note } = { 3'b1, E  };
-        54: { octave, note } = { 3'b1, D  };
-        55: { octave, note } = { 3'b1, C  };
-        56: { octave, note } = { 3'b1, C  };
-        57: { octave, note } = { 3'b1, C  };
+    //     52: { octave, note } = { 3'b0, F  };
+    //     53: { octave, note } = { 3'b1, E  };
+    //     54: { octave, note } = { 3'b1, D  };
+    //     55: { octave, note } = { 3'b1, C  };
+    //     56: { octave, note } = { 3'b1, C  };
+    //     57: { octave, note } = { 3'b1, C  };
 
-        58: { octave, note } = { 3'b0, E  };
-        59: { octave, note } = { 3'b1, D  };
-        60: { octave, note } = { 3'b1, C  };
-        61: { octave, note } = { 3'b0, B  };
+    //     58: { octave, note } = { 3'b0, E  };
+    //     59: { octave, note } = { 3'b1, D  };
+    //     60: { octave, note } = { 3'b1, C  };
+    //     61: { octave, note } = { 3'b0, B  };
 
-        default: { octave, note } = { 3'b0, silence };
-        endcase
+    //     default: { octave, note } = { 3'b0, silence };
+    //     endcase
 
-//    always_comb
-//        case (note_cnt)
-//        0:  { octave, note } = { 3'b0, G   };
-//        1:  { octave, note } = { 3'b1, C   };
-//        2:  { octave, note } = { 3'b1, Ef  };
-//
-//        3:  { octave, note } = { 3'b1, D   };
-//        4:  { octave, note } = { 3'b1, C   };
-//        5:  { octave, note } = { 3'b1, Ef  };
-//        6:  { octave, note } = { 3'b1, C   };
-//        7:  { octave, note } = { 3'b1, D   };
-//        8:  { octave, note } = { 3'b1, C   };
-//        9:  { octave, note } = { 3'b0, Af  };
-//        10: { octave, note } = { 3'b0, Bf  };
-//
-//        11: { octave, note } = { 3'b0, G   };
-//        12: { octave, note } = { 3'b0, G   };
-//        13: { octave, note } = { 3'b0, G   };
-//        13: { octave, note } = { 3'b0, G   };
-//
-//        14: { octave, note } = { 3'b1, C   };
-//        15: { octave, note } = { 3'b1, Ef  };
-//        16: { octave, note } = { 3'b1, D   };
-//        17: { octave, note } = { 3'b1, C   };
-//        18: { octave, note } = { 3'b1, Ef  };
-//        19: { octave, note } = { 3'b1, C   };
-//        20: { octave, note } = { 3'b1, D   };
-//
-//        21: { octave, note } = { 3'b1, C   };
-//        22: { octave, note } = { 3'b0, G   };
-//        23: { octave, note } = { 3'b0, Gf  };
-//        24: { octave, note } = { 3'b0, F   };
-//        25: { octave, note } = { 3'b0, F   };
-//        26: { octave, note } = { 3'b0, F   };
-//        default: { octave, note } = { 3'b0, silence };
-//        endcase
+   always_comb
+       case (note_cnt)
+       0:  { octave, note } = { 3'b0, G   };
+       1:  { octave, note } = { 3'b1, C   };
+       2:  { octave, note } = { 3'b1, Ef  };
+
+       3:  { octave, note } = { 3'b1, D   };
+       4:  { octave, note } = { 3'b1, C   };
+       5:  { octave, note } = { 3'b1, Ef  };
+       6:  { octave, note } = { 3'b1, C   };
+       7:  { octave, note } = { 3'b1, D   };
+       8:  { octave, note } = { 3'b1, C   };
+       9:  { octave, note } = { 3'b0, Af  };
+       10: { octave, note } = { 3'b0, Bf  };
+
+       11: { octave, note } = { 3'b0, G   };
+       12: { octave, note } = { 3'b0, G   };
+       13: { octave, note } = { 3'b0, G   };
+       13: { octave, note } = { 3'b0, G   };
+
+       14: { octave, note } = { 3'b1, C   };
+       15: { octave, note } = { 3'b1, Ef  };
+       16: { octave, note } = { 3'b1, D   };
+       17: { octave, note } = { 3'b1, C   };
+       18: { octave, note } = { 3'b1, Ef  };
+       19: { octave, note } = { 3'b1, C   };
+       20: { octave, note } = { 3'b1, D   };
+
+       21: { octave, note } = { 3'b1, C   };
+       22: { octave, note } = { 3'b0, G   };
+       23: { octave, note } = { 3'b0, Gf  };
+       24: { octave, note } = { 3'b0, F   };
+       25: { octave, note } = { 3'b0, F   };
+       26: { octave, note } = { 3'b0, F   };
+       default: { octave, note } = { 3'b0, silence };
+       endcase
 
     //------------------------------------------------------------------------
 
